@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="hero p-5 rounded-3 text-white mb-4">
+    <div class="d-flex justify-content-between align-items-start">
+      <div>
+        <h1 class="display-6">StudyHub</h1>
+        <p class="lead">Fast, friendly study material and book suggestions powered by free APIs.</p>
+      </div>
+      <div class="text-end">
+        <small class="muted">Tip:</small>
+        <div class="quote">{{ quote }}</div>
+      </div>
+    </div>
+    <form class="mt-4" method="get" action="/">
+      <div class="input-group input-group-lg">
+        <input name="q" value="{{ query }}" type="search" class="form-control" placeholder="Search topic or subject (e.g., calculus, photosynthesis)">
+        <button class="btn btn-dark" type="submit">Search</button>
+      </div>
+    </form>
+  </div>
+
+  <section id="subjects" class="mb-5">
+    <h3>Popular Subjects</h3>
+    <div class="row gx-4 gy-4">
+      {% for key, s in subjects.items() %}
+      <div class="col-md-6">
+        <div class="card subject-card p-3 d-flex flex-row align-items-start">
+          <div class="flex-grow-1">
+            <h5>{{ key }}</h5>
+            <p class="mb-2 text-muted">{{ s.description }}</p>
+            <div class="mb-2">
+              {% for t in s.key_topics %}
+                <span class="chip me-1">{{ t }}</span>
+              {% endfor %}
+            </div>
+            <div>
+              {% for r in s.resources %}
+                <a class="me-3" href="{{ r.url }}" target="_blank">{{ r.name }}</a>
+              {% endfor %}
+            </div>
+          </div>
+          <div class="text-end ms-3">
+            <a class="btn btn-primary" href="/subject/{{ key }}">Explore</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section id="resources">
+    <h3>Results</h3>
+    {% if results %}
+      <div class="card p-3 mb-3">{{ results }}</div>
+    {% elif query %}
+      <div class="alert alert-warning">No summary found for '{{ query }}'. Try another topic.</div>
+    {% endif %}
+
+    {% if books %}
+      <h4 class="mt-3">Suggested Books</h4>
+      <div class="row">
+        {% for b in books %}
+        <div class="col-md-3 mb-3">
+          <div class="card h-100">
+            {% if b.cover_id %}
+            <img src="https://covers.openlibrary.org/b/id/{{ b.cover_id }}-M.jpg" class="card-img-top" alt="{{ b.title }}">
+            {% endif %}
+            <div class="card-body">
+              <h6 class="card-title">{{ b.title }}</h6>
+              <p class="card-text"><small class="text-muted">{{ b.author }}</small></p>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </section>
+
+  <section id="about" class="mt-5">
+    <h5>About</h5>
+    <p class="text-muted">StudyHub demonstrates how to combine free public APIs for quick study material and book suggestions. It's a lightweight starter you can extend.</p>
+  </section>
+
+{% endblock %}

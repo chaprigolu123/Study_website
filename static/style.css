@@ -1,0 +1,8 @@
+body { background: #f6f9ff; }
+.hero { background: linear-gradient(135deg,#2b8cff,#6ad1ff); }
+.hero .quote { font-style: italic; margin-top: 0.5rem; }
+.subject-card { display:block; text-decoration:none; color:#0b2947; background:white; border-radius:8px; padding:18px; box-shadow:0 6px 18px rgba(11,41,71,0.08); }
+.subject-card h5 { margin-bottom: 0.25rem; }
+.chip { display:inline-block; background:#eef7ff; color:#084b6b; padding:4px 8px; border-radius:999px; font-size:0.85rem; }
+.card img { max-height:180px; object-fit:cover; }
+.quote { font-style:italic; color:#065a85; }
